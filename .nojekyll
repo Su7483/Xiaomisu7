@@ -1,0 +1,2 @@
+# 让 GitHub Pages 跳过 Jekyll 处理，直接当静态站发布。
+# 压缩后的 JS 里可能出现 {{ 这类 Liquid 标记，交给 Jekyll 渲染会破坏脚本。
