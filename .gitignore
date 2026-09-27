@@ -1,0 +1,10 @@
+node_modules/
+public/
+.vercel/
+.netlify/
+*.log
+
+# 注意：runtime/ 是「故意提交」的。
+# 它里面是打包好的 bundle 和 Draco 解码器，GitHub Pages 直接从仓库根目录
+# 提供服务时必须有这些文件；只靠 .gitignore 排掉的话线上会 404（踩过一次）。
+# public/ 则是 Netlify Drop 用的投放包，随时可由 npm run build:site 重建，所以忽略。

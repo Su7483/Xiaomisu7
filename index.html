@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#05070A" />
+  <title>小米 SU7 标准版 | 人车合一，我心澎湃</title>
+  <meta name="description" content="小米 SU7 标准版展示页：CLTC 综合续航 700 km，0-100km/h 加速 5.28 s，风阻系数 0.195 Cd。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="小米 SU7 标准版 | 人车合一，我心澎湃" />
+  <meta property="og:description" content="CLTC 综合续航 700km · 0–100km/h 加速 5.28s · 风阻系数 0.195Cd。个人技术演示页面。" />
+  <meta property="og:image" content="assets/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== 背景层：光晕 / 车身轮廓 / 地面光 ===== -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="glow glow--a"></div>
+    <div class="glow glow--b"></div>
+    <div class="floor"></div>
+
+    <div class="stage">
+      <!--
+        照片位（默认不加载、不显示，所以离线打开时零网络请求）：
+        1) 把官方车图存为 assets/su7-hero.jpg
+        2) 给下面这行加上 src="assets/su7-hero.jpg"，并删掉 hidden 属性
+        3) 给 <body> 加上 data-photo="on"
+        完成后照片会替换掉 SVG 轮廓，并自动叠加底部渐隐遮罩。
+      -->
+      <img id="hero-photo" class="stage-media stage-photo" data-parallax="0.8" alt="小米 SU7 标准版" hidden />
+
+      <div class="stage-media stage-car" data-parallax="1">
+        <svg class="car" viewBox="0 0 1200 480" role="presentation" focusable="false">
+          <defs>
+            <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+              <stop class="stop-car-hi" offset="0%" stop-opacity="0.40" />
+              <stop class="stop-car-mid" offset="55%" stop-opacity="0.22" />
+              <stop class="stop-car-lo" offset="100%" stop-opacity="0.08" />
+            </linearGradient>
+            <linearGradient id="carGlass" x1="0" y1="0" x2="0" y2="1">
+              <stop class="stop-car-edge" offset="0%" stop-opacity="0.09" />
+              <stop class="stop-car-edge" offset="100%" stop-opacity="0" />
+            </linearGradient>
+            <filter id="carSoft" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="4" />
+            </filter>
+          </defs>
+
+          <!-- 车身填充 -->
+          <path class="car__body" d="M 108 364
+            C 104 336 112 310 132 296
+            C 156 280 196 272 240 268
+            C 310 258 372 252 424 240
+            C 466 216 514 180 586 166
+            C 660 150 744 146 814 154
+            C 878 162 924 178 972 198
+            C 1026 218 1080 228 1114 238
+            C 1142 248 1152 268 1148 300
+            C 1145 328 1138 350 1126 364
+            L 1010 364
+            A 70 70 0 0 0 870 364
+            L 400 364
+            A 70 70 0 0 0 260 364
+            Z" fill="url(#carBody)" />
+
+          <!-- 侧面玻璃 -->
+          <path class="car__glass" d="M 462 244
+            C 494 210 542 180 602 166
+            C 668 150 742 146 806 154
+            C 852 160 896 178 934 206
+            C 856 222 758 236 668 240
+            C 600 243 518 244 462 244
+            Z" fill="url(#carGlass)" />
+
+          <!-- 车身轮廓 -->
+          <path class="car__outline" d="M 108 364
+            C 104 336 112 310 132 296
+            C 156 280 196 272 240 268
+            C 310 258 372 252 424 240
+            C 466 216 514 180 586 166
+            C 660 150 744 146 814 154
+            C 878 162 924 178 972 198
+            C 1026 218 1080 228 1114 238
+            C 1142 248 1152 268 1148 300
+            C 1145 328 1138 350 1126 364" />
+          <path class="car__outline" d="M 1126 364
+            L 1010 364
+            A 70 70 0 0 0 870 364
+            L 400 364
+            A 70 70 0 0 0 260 364" />
+          <path class="car__outline car__outline--soft" d="M 462 244
+            C 494 210 542 180 602 166
+            C 668 150 742 146 806 154
+            C 852 160 896 178 934 206
+            C 856 222 758 236 668 240
+            C 600 243 518 244 462 244" />
+
+          <!-- 腰线 -->
+          <path class="car__outline car__outline--soft" d="M 300 298 C 520 286 760 284 1024 296" />
+
+          <!-- 描边光扫 -->
+          <path class="car__sweep" pathLength="1000" d="M 108 364
+            C 104 336 112 310 132 296
+            C 156 280 196 272 240 268
+            C 310 258 372 252 424 240
+            C 466 216 514 180 586 166
+            C 660 150 744 146 814 154
+            C 878 162 924 178 972 198
+            C 1026 218 1080 228 1114 238
+            C 1142 248 1152 268 1148 300
+            C 1145 328 1138 350 1126 364" />
+
+          <!-- 灯组 -->
+          <g class="car__lights">
+            <path class="car__light car__light--head" d="M 148 302 L 196 293 L 199 300 L 151 309 Z" />
+            <path class="car__light car__light--tail" filter="url(#carSoft)"
+              d="M 1102 276 L 1144 284 L 1143 292 L 1101 284 Z" />
+          </g>
+
+          <!-- 车轮 -->
+          <g class="car__wheel">
+            <circle cx="330" cy="364" r="64" />
+            <circle cx="940" cy="364" r="64" />
+          </g>
+          <g class="car__rim">
+            <circle cx="330" cy="364" r="34" />
+            <circle cx="940" cy="364" r="34" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 前景内容：三段式 ===== -->
+  <div class="page">
+    <header class="topbar">
+      <p class="brand" data-reveal>小米汽车</p>
+      <p class="tag" data-reveal>标准版</p>
+    </header>
+
+    <main class="hero">
+      <h1 class="hero__title" data-reveal>
+        <span>小米</span><span class="hero__model">SU7</span>
+      </h1>
+      <p class="hero__sub" data-reveal>人车合一，我心澎湃</p>
+
+      <dl class="specs" aria-label="小米 SU7 标准版核心参数">
+        <div class="spec" data-reveal>
+          <dt class="spec__label">CLTC 综合续航</dt>
+          <dd class="spec__value">700<small>km</small></dd>
+        </div>
+        <div class="spec" data-reveal>
+          <dt class="spec__label">0–100 km/h 加速</dt>
+          <dd class="spec__value">5.28<small>s</small></dd>
+        </div>
+        <div class="spec" data-reveal>
+          <dt class="spec__label">最高时速</dt>
+          <dd class="spec__value">210<small>km/h</small></dd>
+        </div>
+        <div class="spec" data-reveal>
+          <dt class="spec__label">电机最大功率</dt>
+          <dd class="spec__value">220<small>kW</small></dd>
+        </div>
+        <div class="spec" data-reveal>
+          <dt class="spec__label">电机峰值扭矩</dt>
+          <dd class="spec__value">400<small>N·m</small></dd>
+        </div>
+        <div class="spec" data-reveal>
+          <dt class="spec__label">风阻系数</dt>
+          <dd class="spec__value">0.195<small>Cd</small></dd>
+        </div>
+      </dl>
+
+      <a class="cta" href="experience.html" data-reveal>探索 SU7</a>
+    </main>
+
+    <footer class="footer">
+      <p class="legal" data-reveal>本页面为个人演示用途，非小米官方页面；车型参数与配置以小米汽车官方公布为准。</p>
+    </footer>
+  </div>
+
+  <script src="main.js" defer></script>
+</body>
+</html>

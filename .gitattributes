@@ -1,0 +1,9 @@
+# Windows 上避免换行符来回变动导致整文件 diff
+* text=auto eol=lf
+
+# 二进制资源，别做任何转换
+*.glb  binary
+*.wasm binary
+*.jpg  binary
+*.png  binary
+*.woff2 binary

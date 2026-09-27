@@ -1,0 +1,606 @@
+/* ==========================================================================
+   小米 SU7 标准版 · 极简一屏宣传页
+   零依赖：无外部字体、图片、图标库。全部视觉由 CSS + 内联 SVG 完成。
+   换肤只需改下面的变量。
+   ========================================================================== */
+
+:root {
+  --bg: #05070A;
+  --surface: #0B0F14;
+
+  --glow-a: #1E6FFF;
+  --glow-b: #00D2FF;
+
+  --car-hi: #2E6BD6;
+  --car-mid: #17407F;
+  --car-lo: #0A2E63;
+  --car-edge: #9FD4FF;
+
+  --accent: #FF6A00;
+
+  --text: #F5F8FB;
+  --text-2: rgba(245, 248, 251, 0.62);
+  --text-3: rgba(245, 248, 251, 0.38);
+  --hairline: rgba(245, 248, 251, 0.10);
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", Roboto, sans-serif;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --pad: clamp(20px, 3.4vw, 60px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==========================================================================
+   背景层
+   ========================================================================== */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(30, 111, 255, 0.18), transparent 70%),
+    linear-gradient(180deg, #060910 0%, var(--bg) 46%, #020305 100%);
+}
+
+/* 底部压暗，保证按钮与免责小字始终清晰 */
+.backdrop::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 36%;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 7, 10, 0) 0%,
+    rgba(5, 7, 10, 0.45) 44%,
+    rgba(5, 7, 10, 0.86) 76%,
+    rgba(5, 7, 10, 0.97) 100%
+  );
+}
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+  will-change: transform;
+}
+
+.glow--a {
+  width: 62vw;
+  height: 62vw;
+  left: -14vw;
+  top: -22vw;
+  opacity: 0.42;
+  background: radial-gradient(circle, var(--glow-a) 0%, rgba(30, 111, 255, 0) 68%);
+  animation: drift-a 26s ease-in-out infinite alternate;
+}
+
+.glow--b {
+  width: 54vw;
+  height: 54vw;
+  right: -12vw;
+  top: -8vw;
+  opacity: 0.26;
+  background: radial-gradient(circle, var(--glow-b) 0%, rgba(0, 210, 255, 0) 66%);
+  animation: drift-b 32s ease-in-out infinite alternate;
+}
+
+/* 用独立的 translate / scale 属性做漂移，与 transform 上的视差互不干扰 */
+@keyframes drift-a {
+  from { translate: 0 0; scale: 1; }
+  to   { translate: 5vw 3vh; scale: 1.14; }
+}
+
+@keyframes drift-b {
+  from { translate: 0 0; scale: 1.08; }
+  to   { translate: -4vw 4vh; scale: 1; }
+}
+
+.floor {
+  position: absolute;
+  left: 50%;
+  bottom: -8vh;
+  width: min(1420px, 124vw);
+  height: 36vh;
+  transform: translate3d(calc(-50% + var(--px, 0px)), var(--py, 0px), 0);
+  background: radial-gradient(ellipse at 50% 100%, rgba(0, 210, 255, 0.20), rgba(0, 210, 255, 0) 62%);
+  filter: blur(18px);
+  will-change: transform;
+}
+
+/* ---------- 车身 / 照片舞台 ---------- */
+
+.stage {
+  position: absolute;
+  inset: 0;
+}
+
+.stage-media {
+  position: absolute;
+  left: 50%;
+  bottom: -4%;
+  width: min(1300px, 88vw);
+  transform: translate3d(calc(-50% + var(--px, 0px)), var(--py, 0px), 0);
+  will-change: transform;
+}
+
+.stage-car {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 14%,
+    #000 38%,
+    #000 74%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 14%,
+    #000 38%,
+    #000 74%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.car {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* SVG 渐变的颜色也走变量，换肤只需改 :root */
+.stop-car-hi { stop-color: var(--car-hi); }
+.stop-car-mid { stop-color: var(--car-mid); }
+.stop-car-lo { stop-color: var(--car-lo); }
+.stop-car-edge { stop-color: var(--car-edge); }
+
+.car__outline {
+  fill: none;
+  stroke: var(--car-edge);
+  stroke-width: 1.6;
+  stroke-opacity: 0.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.car__outline--soft {
+  stroke-width: 1.1;
+  stroke-opacity: 0.18;
+}
+
+.car__sweep {
+  fill: none;
+  stroke: #C9E7FF;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-opacity: 0.32;
+  stroke-dasharray: 40 960;
+  animation: sweep 9s linear infinite;
+}
+
+@keyframes sweep {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -1000; }
+}
+
+.car__light--head {
+  fill: #DCEBFF;
+  opacity: 0.45;
+}
+
+.car__light--tail {
+  fill: var(--accent);
+  opacity: 0.3;
+}
+
+.car__wheel circle {
+  fill: none;
+  stroke: var(--car-edge);
+  stroke-opacity: 0.34;
+  stroke-width: 2;
+}
+
+.car__rim circle {
+  fill: none;
+  stroke: var(--car-edge);
+  stroke-opacity: 0.22;
+  stroke-width: 1.4;
+}
+
+/* ---------- 照片位：默认 display:none，所以离线时不会产生任何请求 ---------- */
+
+.stage-photo {
+  display: none;
+}
+
+body[data-photo="on"] .stage-car {
+  display: none;
+}
+
+body[data-photo="on"] .stage-photo:not([hidden]) {
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%);
+  filter: saturate(1.05) contrast(1.04);
+}
+
+/* ==========================================================================
+   前景内容
+   ========================================================================== */
+
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  /* 显式约束列宽，否则隐式列会按 max-content 撑开，导致窄屏横向溢出 */
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(14px, 2.4vh, 28px);
+  padding: clamp(18px, 2.8vh, 36px) var(--pad) clamp(16px, 2.4vh, 30px);
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  margin: 0;
+  font-size: clamp(11px, 0.86vw, 13px);
+  letter-spacing: 0.42em;
+  padding-left: 0.42em;
+  color: var(--text-2);
+}
+
+.tag {
+  margin: 0;
+  font-size: clamp(10px, 0.78vw, 12px);
+  letter-spacing: 0.24em;
+  padding: 0.5em 1.05em 0.5em 1.29em;
+  color: var(--text-2);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: clamp(16px, 2.6vh, 34px);
+  /* 轻微上移，把下半屏留给车身 */
+  padding-bottom: clamp(0px, 8vh, 88px);
+}
+
+.hero__title {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: clamp(8px, 1.5vw, 26px);
+  font-size: clamp(46px, 10.5vw, 150px);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: 0.02em;
+  background: linear-gradient(180deg, #FFFFFF 0%, #DCE9F7 46%, #93B2D2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__model {
+  letter-spacing: -0.01em;
+}
+
+.hero__sub {
+  margin: 0;
+  font-size: clamp(14px, 1.45vw, 23px);
+  font-weight: 400;
+  letter-spacing: 0.34em;
+  padding-left: 0.34em;
+  color: var(--text-2);
+}
+
+/* ---------- 参数条 ---------- */
+
+.specs {
+  margin: 0;
+  width: 100%;
+  max-width: 1180px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.spec {
+  display: flex;
+  flex-direction: column-reverse; /* DOM 顺序是 dt→dd，视觉上让数值在上、标签在下 */
+  align-items: center;
+  min-width: 0;
+  gap: 0.7em;
+  padding: clamp(14px, 2.1vh, 26px) clamp(8px, 1.1vw, 20px);
+  border-top: 1px solid var(--hairline);
+}
+
+.spec:nth-child(odd) {
+  border-right: 1px solid var(--hairline);
+}
+
+.spec:nth-child(-n + 2) {
+  border-top: 0;
+}
+
+.spec__value {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  font-size: clamp(23px, 2.5vw, 42px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.spec__value small {
+  margin-left: 0.42em;
+  font-size: 0.4em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+}
+
+.spec__label {
+  font-size: clamp(11px, 0.85vw, 13px);
+  letter-spacing: 0.16em;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+/* ---------- 主按钮（仅视觉，不绑定任何行为） ---------- */
+
+.cta {
+  position: relative;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: clamp(13px, 1.05vw, 16px);
+  letter-spacing: 0.22em;
+  color: var(--text);
+  padding: 1.15em 2.6em 1.15em 2.95em;
+  border: 1px solid rgba(255, 106, 0, 0.5);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 14px 40px -18px rgba(30, 111, 255, 0.7);
+  transition: border-color 0.35s var(--ease), background 0.35s var(--ease),
+    box-shadow 0.35s var(--ease), transform 0.25s var(--ease);
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  left: 1.55em;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px 2px rgba(255, 106, 0, 0.7);
+}
+
+.cta:hover {
+  border-color: rgba(255, 106, 0, 0.9);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+  box-shadow: 0 0 34px -8px rgba(255, 106, 0, 0.45), 0 16px 44px -18px rgba(30, 111, 255, 0.8);
+  transform: translateY(-2px);
+}
+
+.cta:active {
+  transform: translateY(0);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--glow-b);
+  outline-offset: 4px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+}
+
+.legal {
+  margin: 0;
+  width: 100%;
+  max-width: 760px;
+  text-align: center;
+  font-size: clamp(10.5px, 0.72vw, 12px);
+  line-height: 1.75;
+  color: var(--text-3);
+}
+
+/* ==========================================================================
+   入场动画：由 main.js 添加 .reveal / .is-in，JS 关闭时内容依然直接可见
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================================
+   响应式
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .specs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .spec {
+    border-top: 1px solid var(--hairline);
+    border-right: 1px solid var(--hairline);
+  }
+
+  .spec:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .spec:nth-child(-n + 3) {
+    border-top: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .specs {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .spec {
+    border-top: 0;
+    border-right: 0;
+    border-left: 1px solid var(--hairline);
+  }
+
+  .spec:first-child {
+    border-left: 0;
+  }
+}
+
+/* 矮屏（笔记本 / 横屏平板）：整体收紧，保证一屏放得下 */
+@media (min-width: 768px) and (max-height: 780px) {
+  .page {
+    gap: 10px;
+  }
+
+  /* 矮屏上把车身整体缩小下压，避免车顶切到参数条 */
+  .stage-media {
+    width: min(840px, 66vw);
+    bottom: -6%;
+  }
+
+  .hero {
+    gap: 14px;
+    padding-bottom: clamp(0px, 5vh, 40px);
+  }
+
+  .hero__title {
+    font-size: clamp(44px, 8vw, 104px);
+  }
+
+  .spec {
+    padding: 12px 10px;
+  }
+
+  .spec__value {
+    font-size: clamp(21px, 2vw, 32px);
+  }
+}
+
+/* 手机：允许纵向滚动，避免内容被压扁 */
+@media (max-width: 767px) {
+  .stage-media {
+    bottom: 2%;
+    width: 172%;
+  }
+
+  .hero {
+    gap: 18px;
+    padding-bottom: clamp(0px, 6vh, 64px);
+  }
+
+  .hero__sub {
+    letter-spacing: 0.24em;
+    padding-left: 0.24em;
+  }
+
+  /* 双列参数条：允许标签换行，否则长标签会撑破网格导致横向滚动 */
+  .spec {
+    padding: 14px 6px;
+    gap: 0.55em;
+  }
+
+  .spec__label {
+    white-space: normal;
+    text-align: center;
+    letter-spacing: 0.08em;
+    line-height: 1.45;
+  }
+
+  .spec__value {
+    font-size: clamp(21px, 6.4vw, 28px);
+  }
+}
+
+/* ==========================================================================
+   减少动态效果
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .glow,
+  .floor,
+  .stage-media {
+    transform: translate3d(-50%, 0, 0) !important;
+  }
+
+  .glow {
+    animation: none;
+  }
+
+  .car__sweep {
+    animation: none;
+    stroke-opacity: 0;
+  }
+}

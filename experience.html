@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#04060A" />
+  <title>小米 SU7 标准版 | 三维体验</title>
+  <meta name="description" content="小米 SU7 标准版滚动驱动三维展示：WebGL2 实时渲染、滚动编排镜头、程序化车漆与环境反射。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="小米 SU7 标准版 | 三维体验" />
+  <meta property="og:description" content="滚动驱动的三维产品页：WebGL2 实时渲染、滚动编排镜头、可拖动车身、关键词与车模联动。" />
+  <meta property="og:image" content="assets/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="experience.css" />
+</head>
+<body>
+
+  <canvas id="stage" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ===== 开场 ===== -->
+  <div id="intro" class="intro">
+    <div class="intro__inner">
+      <p class="intro__brand">小米汽车</p>
+      <div class="intro__track"><div id="intro-bar" class="intro__bar"></div></div>
+      <p class="intro__note">正在初始化三维影棚</p>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <a class="topbar__brand" href="index.html">小米汽车</a>
+    <a class="topbar__back" href="index.html">← 返回极简版</a>
+  </header>
+
+  <div class="hud" aria-hidden="true">
+    <div class="hud__track"><div id="hud-bar" class="hud__bar"></div></div>
+    <div class="hud__meta">
+      <span id="hud-index">01 / 08</span>
+      <span id="hud-label">序章</span>
+    </div>
+  </div>
+
+  <main>
+    <!-- 1 序章 -->
+    <section class="panel panel--hero">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>小米 SU7 标准版</p>
+        <h1 class="title" data-split>人车合一</h1>
+        <h1 class="title title--accent" data-split>我心澎湃</h1>
+        <p class="lede" data-fade>4997mm 车长 · 3000mm 轴距 · 0.195Cd 风阻系数</p>
+      </div>
+    </section>
+
+    <!-- 2 设计 -->
+    <section class="panel panel--left">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>01 — 设计</p>
+        <h2 class="title title--sm" data-split>五米级的低趴溜背</h2>
+        <p class="body" data-fade>
+          车顶弧线从 A 柱一路滑向尾部，腰线在门板处收紧再向后展开。
+          低重心、宽轮距、短前悬，是这台车所有比例关系的出发点。
+        </p>
+      </div>
+    </section>
+
+    <!-- 3 空气动力学 -->
+    <section class="panel panel--right">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>02 — 空气动力学</p>
+        <h2 class="title" data-split>0.195</h2>
+        <p class="body" data-fade>
+          风阻系数 Cd 0.195。溜背的斜率、尾部的扩散器、封闭式的前脸，
+          每一处曲面都在为同一个数字服务。
+        </p>
+      </div>
+    </section>
+
+    <!-- 4 灯组 -->
+    <section class="panel panel--left">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>03 — 灯组</p>
+        <h2 class="title title--sm" data-split>把灯做成一条线</h2>
+        <p class="body" data-fade>
+          车头是一条冷白的日行灯带，车尾是一条暖红的贯穿灯带。
+          熄灭的时候它们只是两道深色饰条，点亮时会沿着曲面整条亮起。
+        </p>
+      </div>
+    </section>
+
+    <!-- 5 性能 -->
+    <section class="panel panel--specs" id="panel-specs">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>04 — 标准版核心参数</p>
+        <dl class="specs">
+          <div class="spec" data-fade>
+            <dt>CLTC 综合续航</dt>
+            <dd><span data-count="700">0</span><small>km</small></dd>
+          </div>
+          <div class="spec" data-fade>
+            <dt>0–100km/h 加速</dt>
+            <dd><span data-count="5.28" data-decimals="2">0</span><small>s</small></dd>
+          </div>
+          <div class="spec" data-fade>
+            <dt>最高时速</dt>
+            <dd><span data-count="210">0</span><small>km/h</small></dd>
+          </div>
+          <div class="spec" data-fade>
+            <dt>电机最大功率</dt>
+            <dd><span data-count="220">0</span><small>kW</small></dd>
+          </div>
+          <div class="spec" data-fade>
+            <dt>电机峰值扭矩</dt>
+            <dd><span data-count="400">0</span><small>N·m</small></dd>
+          </div>
+          <div class="spec" data-fade>
+            <dt>风阻系数</dt>
+            <dd><span data-count="0.195" data-decimals="3">0</span><small>Cd</small></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 6 车漆 -->
+    <section class="panel panel--bottom">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>05 — 车漆</p>
+        <h2 class="title title--sm" data-split>换一个颜色，换一种情绪</h2>
+        <div class="swatches" data-fade>
+          <button class="swatch" type="button" data-color="#2f5fd0" data-name="海湾蓝" aria-pressed="true">
+            <span class="swatch__chip" style="--chip: #2f5fd0"></span>海湾蓝
+          </button>
+          <button class="swatch" type="button" data-color="#8d9299" data-name="雅灰" aria-pressed="false">
+            <span class="swatch__chip" style="--chip: #8d9299"></span>雅灰
+          </button>
+          <button class="swatch" type="button" data-color="#6d5aa6" data-name="霞光紫" aria-pressed="false">
+            <span class="swatch__chip" style="--chip: #6d5aa6"></span>霞光紫
+          </button>
+          <button class="swatch" type="button" data-color="#15171c" data-name="钻石黑" aria-pressed="false">
+            <span class="swatch__chip" style="--chip: #15171c"></span>钻石黑
+          </button>
+        </div>
+        <p class="hint" data-fade>当前车漆：<span id="paint-name">海湾蓝</span></p>
+      </div>
+    </section>
+
+    <!-- 7 关键词 -->
+    <section class="panel panel--tags" id="panel-tags">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>06 — 关键词</p>
+        <h2 class="title title--sm" data-split>拖动这个球</h2>
+        <div id="tags" class="tags" data-fade></div>
+        <p class="hint" data-fade>拖动可以转向。点任意一个关键词，镜头会带你去看车上对应的部位。</p>
+      </div>
+    </section>
+
+    <!-- 8 尾声 -->
+    <section class="panel panel--outro">
+      <div class="panel__inner">
+        <p class="eyebrow" data-fade>尾声</p>
+        <h2 class="title title--sm" data-split>技术演示到此为止</h2>
+        <p class="body" data-fade>
+          本页是个人技术研究与审美练习，非小米官方页面。
+          <span id="model-note">三维车身由代码程序化生成</span>，参数与配置以小米汽车官方公布为准。
+        </p>
+        <div class="actions" data-fade>
+          <a class="button" href="index.html">回到极简版首页</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="scroll-hint" aria-hidden="true"><span></span>向下滚动</div>
+  <div class="drag-hint" aria-hidden="true">拖动旋转车身 · 双击回正</div>
+
+  <button id="audio-toggle" class="audio" type="button" aria-pressed="false" data-state="off">
+    <span class="audio__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="audio__text">开启环境音</span>
+  </button>
+
+  <!-- DRACOLoader 在模块初始化时会用 import.meta.url 拼解码器路径，
+       打成 IIFE 后这个值不存在，所以在这里先给它一个合法的绝对基址。 -->
+  <script>
+    window.__SU7_BASE__ = new URL('.', location.href).href;
+
+    /* 兜底：脚本没加载成功时，不要把开场遮罩永远留在那里。
+       之前部署漏传了运行时目录，页面就是卡在这一屏且毫无提示。 */
+    window.setTimeout(function () {
+      if (window.__SU7_BOOTED__) return;
+      var note = document.querySelector('.intro__note');
+      var bar = document.getElementById('intro-bar');
+      if (bar) bar.style.transform = 'scaleX(1)';
+      if (note) {
+        note.textContent = '资源加载失败：runtime/bundle.js 没能取到，页面无法启动';
+        note.style.color = '#ff8a5c';
+        note.style.letterSpacing = '0.06em';
+      }
+    }, 8000);
+  </script>
+  <script src="runtime/bundle.js" defer></script>
+</body>
+</html>
